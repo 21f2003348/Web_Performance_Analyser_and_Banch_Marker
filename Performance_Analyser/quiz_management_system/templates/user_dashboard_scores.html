@@ -1,0 +1,145 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>User Dashboard Scores</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding-top: 70px; /* Space for header mimic */
+            padding-left: 20px;
+            padding-right: 20px;
+            color: #333;
+        }
+        /* Navigation Bar Styling */
+        header .nav {
+            background: linear-gradient(90deg, #d0e7ff, #8ec0ff);
+            padding: 10px 20px;
+            border-bottom: 3px solid #ffa500;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        header .nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        header .nav ul li {
+            margin: 0 10px;
+            font-weight: bold;
+        }
+        header .nav ul a {
+            color: green;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        header .nav ul a:hover {
+            color: #005700;
+        }
+        /* Header Title Styling */
+        header h1 {
+            text-align: center;
+            background: linear-gradient(90deg, #d0e7ff, #8ec0ff);
+            padding: 10px;
+            border-bottom: 3px solid #ffa500;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin: 70px 0 20px 0; /* Adjust top margin to account for fixed nav */
+        }
+        /* Container Styling */
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        table thead th {
+            text-align: left;
+            padding: 12px;
+            background: linear-gradient(90deg, #d0e7ff, #8ec0ff);
+            border: 1px solid #ccc;
+        }
+        table tbody td {
+            padding: 12px;
+            border: 1px solid #ccc;
+        }
+        /* Link Styling */
+        a {
+            display: block;
+            text-align: center;
+            margin: 20px 0;
+            color: #ff6666;
+            font-weight: bold;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        a:hover {
+            color: #ff4d4d;
+        }
+        /* Footer Styling */
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            padding: 10px;
+            background: #ddd;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="nav">
+            <ul>
+                <a href="{{ url_for('user_dashboard') }}"><li>Home |</li></a>
+                <a href="{{ url_for('user_dashboard_scores') }}"><li>Score |</li></a>
+                <a href="{{ url_for('login') }}"><li>Logout |</li></a>
+                <li>Welcome {{ user.full_name }}</li>
+
+            </ul>
+        </div>
+    </header>
+    <div class="container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Score</th>
+                    <th>Date of Submission</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for score in scores %}
+                <tr>
+                    <td>{{ loop.index }}</td>  <!-- Displaying serial number -->
+                    <td>{{ score.total_scored }}</td>
+                    <td>{{ score.time_stamp_of_attempt.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{{ url_for('user_dashboard') }}">Back to Dashboard</a>
+    </div>
+    <footer>
+        <p>&copy; 2025 Quiz Application</p>
+    </footer>
+</body>
+</html>

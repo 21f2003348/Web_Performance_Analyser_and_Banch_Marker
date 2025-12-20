@@ -1,0 +1,126 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Subject</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding-top: 70px; /* Space for header mimic */
+            padding-left: 20px;
+            padding-right: 20px;
+            color: #333;
+        }
+        /* Header Styling */
+        h1 {
+            text-align: center;
+            background: linear-gradient(90deg, #d0e7ff, #8ec0ff);
+            padding: 10px;
+            border-bottom: 3px solid #ffa500;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin: 0 0 20px 0;
+        }
+        /* Form Styling */
+        form {
+            max-width: 500px;
+            margin: 0 auto 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        form label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        form input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        form input[type="submit"] {
+            margin-top: 15px;
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #000;
+            border-radius: 5px;
+            background-color: #ff6666;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        form input[type="submit"]:hover {
+            background-color: #ff4d4d;
+        }
+        /* Button Styling */
+        a button {
+            display: block;
+            margin: 0 auto 20px auto;
+            padding: 10px 20px;
+            border: 1px solid #000;
+            border-radius: 5px;
+            background-color: #ff6666;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        a button:hover {
+            background-color: #ff4d4d;
+        }
+        /* List Styling */
+        ul {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 0;
+            list-style: none;
+        }
+        ul li {
+            background-color: #fff;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        /* Sub-heading Styling */
+        h2 {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>New Subject</h1>
+    <form method="POST" action="{{ url_for('add_subject') }}">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        <br>
+        <label for="description">Description:</label>
+        <input type="text" id="description" name="description">
+        <br>
+        <input type="submit" value="Add Subject">
+    </form>
+    <a href="{{ url_for('admin_dashboard') }}"><button>Cancel</button></a>
+    <h2>Existing Subjects</h2>
+    <ul>
+        {% for subject in subjects %}
+            <li>{{ subject.name }}: {{ subject.description }}</li>
+        {% else %}
+            <li>No subjects available.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
+</ul>
+</body>
+</html>

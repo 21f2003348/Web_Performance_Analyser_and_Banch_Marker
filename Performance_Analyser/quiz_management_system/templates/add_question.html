@@ -1,0 +1,111 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Question</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding-top: 70px; /* Space for header mimic */
+            padding-left: 20px;
+            padding-right: 20px;
+            color: #333;
+        }
+        /* Header Styling applied to h1 to mimic a fixed header look */
+        h1 {
+            text-align: center;
+            background: linear-gradient(90deg, #d0e7ff, #8ec0ff);
+            padding: 10px;
+            border-bottom: 3px solid #ffa500;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin: 0 0 20px 0;
+        }
+        /* Form Styling */
+        form {
+            max-width: 600px;
+            margin: 0 auto 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        form label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        form input[type="text"],
+        form input[type="tel"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        form input[type="submit"] {
+            margin-top: 15px;
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #000;
+            border-radius: 5px;
+            background-color: #ff6666;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        form input[type="submit"]:hover {
+            background-color: #ff4d4d;
+        }
+        /* Button Styling */
+        a button {
+            display: block;
+            margin: 0 auto 20px auto;
+            padding: 10px 20px;
+            border: 1px solid #000;
+            border-radius: 5px;
+            background-color: #ff6666;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        a button:hover {
+            background-color: #ff4d4d;
+        }
+    </style>
+</head>
+<body>
+    <h1>Add Question</h1>
+    <form method="POST" action="{{ url_for('add_question', quiz_id=quiz_id) }}">
+        <label for="question_title">Question Title:</label>
+        <input type="text" id="question_title" name="question_title" required>
+        <br>
+        <label for="question_statement">Question Statement:</label>
+        <input type="text" id="question_statement" name="question_statement" required>
+        <br>
+        <label for="option1">Option 1:</label>
+        <input type="text" id="option1" name="option1" required>
+        <br>
+        <label for="option2">Option 2:</label>
+        <input type="text" id="option2" name="option2" required>
+        <br>
+        <label for="option3">Option 3:</label>
+        <input type="text" id="option3" name="option3">
+        <br>
+        <label for="option4">Option 4:</label>
+        <input type="text" id="option4" name="option4">
+        <br>
+        <label for="correct_answer">Correct Answer</label>
+        <input type="tel" id="correct_answer" name="correct_answer">
+        <input type="submit" value="Save and Next">
+    </form>
+    <a href="{{ url_for('admin_dashboard') }}"><button>Close</button></a>
+</body>
+</html>

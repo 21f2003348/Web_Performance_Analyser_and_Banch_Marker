@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Scores</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Quiz Information</h1>
+    </header>
+    <div class="container">
+        <h2>Your Score: {{ total_score }}</h2>
+
+        <form>
+            <label for="quiz_id">Quiz ID:</label>
+            <p id="quiz_id">{{ quiz.id }}</p>
+            
+            <label for="subject">Subject:</label>
+            <p id="subject">{{ subject_name }}</p>
+            
+            <label for="chapter_number">Chapter Name:</label>
+            <p id="chapter_number">{{ chapter_name }}</p>
+
+            <label for="scheduled_date">Scheduled Date:</label>
+            <p id="scheduled_date">{{ quiz.date_of_quiz }}</p>
+            
+            <label for="duration">Duration:</label>
+            <p id="duration">{{ quiz.time_duration }}</p>
+
+            <a href="{{ url_for('user_dashboard') }}"><button type="button" onclick="window.close();">Close</button></a>
+        </form>
+    </div>
+    <footer>
+        <p>&copy; 2025 Quiz Application</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding-top: 70px; /* Space for header mimic */
+            padding-left: 20px;
+            padding-right: 20px;
+            color: #333;
+        }
+        /* Header Styling */
+        header {
+            background: linear-gradient(90deg, #d0e7ff, #8ec0ff);
+            padding: 10px 20px;
+            border-bottom: 3px solid #ffa500;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        header .nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        header .nav ul li {
+            margin: 0 10px;
+            font-weight: bold;
+        }
+        header .nav ul a {
+            color: green;
+            transition: color 0.3s;
+        }
+        header .nav ul a:hover {
+            color: #005700;
+        }
+        /* Container Styling */
+        .container {
+            max-width: 1200px;
+            margin: 90px auto 20px auto; /* Adjust top margin for fixed header */
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        table th, table td {
+            padding: 12px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+        table thead th {
+            background: linear-gradient(90deg, #d0e7ff, #8ec0ff);
+            font-weight: bold;
+        }
+        /* Footer Styling */
+        footer {
+            clear: both;
+            text-align: center;
+            margin-top: 20px;
+            padding: 10px;
+            background: #ddd;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="nav">
+            <ul>
+                <a href="{{ url_for('user_dashboard') }}"><li>Home |</li></a>
+                <a href="{{ url_for('user_dashboard_scores') }}"><li>Score |</li></a>
+                <a href="{{ url_for('login') }}"><li>Logout |</li></a>
+                <li>Welcome {{ user.full_name }}</li>
+
+            </ul>
+        </div>
+    </header>
+    <div class="container">
+        <h1>Upcoming Quizzes</h1>
+        <table>
+            <tr>
+                <th>Id</th>
+                <th>No of Questions</th>
+                <th>Date</th>
+                <th>Duration(hh:mm)</th>
+                <th>Action</th>
+            </tr>
+            {% for quiz in quizzes %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ questions | selectattr('quiz_id', 'equalto', quiz.id) | list | length }}</td>                        
+                    <td>{{ quiz.date_of_quiz }}</td>
+                    <td>{{ quiz.time_duration }}</td>
+                    <td>
+                        <a href="{{ url_for('view', quiz_id=quiz.id) }}"><p>View</p></a>
+                        <a href="{{ url_for('quiz', quiz_id=quiz.id) }}"><p>Start</p></a>
+                    </td>
+                </tr>   
+            {% endfor %}
+        </table>
+    </div>
+    <footer>
+        <p>&copy; 2025 Quiz Application</p>
+    </footer>
+</body>
+</html>

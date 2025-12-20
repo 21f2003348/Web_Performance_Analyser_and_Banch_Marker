@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding-top: 70px; /* Space for header mimic */
+            padding-left: 20px;
+            padding-right: 20px;
+            color: #333;
+        }
+        /* Header Styling */
+        h1 {
+            text-align: center;
+            background: linear-gradient(90deg, #d0e7ff, #8ec0ff);
+            padding: 10px;
+            border-bottom: 3px solid #ffa500;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin: 0 0 20px 0;
+        }
+        /* Form Styling */
+        form {
+            max-width: 500px;
+            margin: 0 auto 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        form label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        form .form-control {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        form .btn {
+            margin-top: 15px;
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #000;
+            border-radius: 5px;
+            background-color: #ff6666;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        form .btn:hover {
+            background-color: #ff4d4d;
+        }
+        /* Link Styling */
+        a p {
+            text-align: center;
+            margin-top: 15px;
+            color: #007bff;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+        a p:hover {
+            color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to Quiz Master</h1>
+    <h1>Registeration</h1>
+    <form method="POST" action="{{ url_for('register') }}">
+        {{ form.hidden_tag() }}
+        <label for="username">Username:</label>
+        {{ form.username(class="form-control", autocomplete="username") }}
+        <br>
+        <label for="password">Password:</label>
+        {{ form.password(class="form-control", autocomplete="new-password") }}
+        <br>
+        <label for="full_name">Full Name:</label>
+        {{ form.full_name(class="form-control", autocomplete="name") }}
+        <br>
+        <label for="qualification">Qualification:</label>
+        {{ form.qualification(class="form-control", autocomplete="qualification") }}
+        <br>
+        <label for="dob">Date of Birth:</label>
+        {{ form.dob(class="form-control", autocomplete="bday") }}
+        <br>
+        {{ form.submit(class="btn btn-primary") }}
+        <a href="{{ url_for('login') }}">
+            <p>Existing user</p>
+        </a>
+    </form>
+</body>
+</html>

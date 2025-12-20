@@ -1,0 +1,144 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Quiz</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding-top: 70px; /* Space for header */
+            padding-left: 20px;
+            padding-right: 20px;
+            color: #333;
+        }
+        /* Header Styling applied to h1 to mimic a fixed header look */
+        h1 {
+            text-align: center;
+            background: linear-gradient(90deg, #d0e7ff, #8ec0ff);
+            padding: 10px;
+            border-bottom: 3px solid #ffa500;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin: 0 0 20px 0;
+        }
+        /* Form Styling */
+        form {
+            max-width: 500px;
+            margin: 0 auto 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        form label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        form input[type="text"],
+        form input[type="date"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        form input[type="submit"] {
+            margin-top: 15px;
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #000;
+            border-radius: 5px;
+            background-color: #ff6666;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        form input[type="submit"]:hover {
+            background-color: #ff4d4d;
+        }
+        /* Cancel button styling */
+        a button {
+            display: block;
+            margin: 0 auto 20px auto;
+            padding: 10px 20px;
+            border: 1px solid #000;
+            border-radius: 5px;
+            background-color: #ff6666;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        a button:hover {
+            background-color: #ff4d4d;
+        }
+        /* Table Styling */
+        table {
+            max-width: 600px;
+            margin: 20px auto;
+            border-collapse: collapse;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        table th, table td {
+            padding: 12px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+        table thead th {
+            background: linear-gradient(90deg, #d0e7ff, #8ec0ff);
+            font-weight: bold;
+        }
+        table tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Add Quiz</h1>
+    <form method="POST" action="{{ url_for('add_quiz') }}">
+        <label for="chapter_id">Chapter Id:</label>
+        <input type="text" id="chapter_id" name="chapter_id" required>
+        <br>
+        <label for="date_of_quiz">Date:</label>
+        <input type="date" id="date_of_quiz" name="date_of_quiz" required>
+        <br>
+        <label for="time_duration">Duration (hh:mm):</label>
+        <input type="text" id="time_duration" name="time_duration" required placeholder="hh/mm">
+        <br>
+        <label for="remarks">Remarks:</label>
+        <input type="text" id="remarks" name="remarks">
+        <br>
+        <input type="submit" value="Save">
+    </form>
+    <a href="{{ url_for('admin_dashboard_quiz') }}"><button>Cancel</button></a>
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for chapter in chapters %}
+                <tr>
+                    <td>{{ chapter.id }}</td>
+                    <td>{{ chapter.name }}</td>
+                    <td>{{ chapter.description }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3">No subjects available.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

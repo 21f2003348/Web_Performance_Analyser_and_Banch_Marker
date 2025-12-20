@@ -1,0 +1,120 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard Summary</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 70px 20px 20px 20px; /* Top padding for fixed header */
+            color: #333;
+        }
+        /* Fixed Header Styling */
+        header {
+            background: linear-gradient(90deg, #d0e7ff, #8ec0ff);
+            padding: 10px 20px;
+            border-bottom: 3px solid #ffa500;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        /* Nav Bar Styling */
+        header .nav {
+            text-align: center;
+            margin-bottom: 5px;
+        }
+        header .nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: inline-flex;
+            gap: 15px;
+        }
+        header .nav ul li {
+            font-weight: bold;
+        }
+        header .nav ul li a {
+            text-decoration: none;
+            color: green;
+            transition: color 0.3s;
+        }
+        header .nav ul li a:hover {
+            color: #005700;
+        }
+        /* Header Title Styling */
+        header h1 {
+            margin: 0;
+            text-align: center;
+            color: green;
+            font-size: 1.8em;
+            padding-top: 5px;
+        }
+        /* Container Styling */
+        .container {
+            max-width: 1200px;
+            margin: 90px auto 20px auto; /* Adjust top margin for fixed header */
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table thead th {
+            background: linear-gradient(90deg, #d0e7ff, #8ec0ff);
+            padding: 12px;
+            border: 1px solid #ccc;
+            font-weight: bold;
+        }
+        table tbody td {
+            padding: 12px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="nav">
+            <ul>
+                <li><a href="{{ url_for('admin_dashboard') }}">Home</a></li>
+                <li><a href="{{ url_for('admin_dashboard_quiz') }}">Quiz</a></li>
+                <li><a href="{{ url_for('admin_dashboard_summary') }}">Summary</a></li>
+                <li><a href="{{ url_for('login') }}">Logout</a></li>
+            </ul>
+        </div>
+        <h1>Admin Dashboard Summary</h1>
+    </header>
+    <div class="container">
+        <table>
+            <thead>
+                <tr>
+                    <th>User</th>
+                    <th>Quiz ID</th>
+                    <th>Score</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for score in scores %}
+                <tr>
+                    <td>{{ users[score.user_id].full_name if score.user_id in users else 'Unknown' }}</td>
+                    <td>{{ score.quiz_id }}</td>
+                    <td>{{ score.total_scored }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
