@@ -3,6 +3,7 @@ from sqlalchemy import func
 from datetime import datetime
 import logging
 import os
+import flask_profiler
 
 from forms import LoginForm, RegistrationForm
 from models import db, User, Subject, Chapter, Quiz, Question, Score
@@ -17,6 +18,25 @@ login_manager = LoginManager()
 # existing config
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.secret_key = 'your_secret_key'
+
+# flask_profiler config
+app.config["flask_profiler"] = {
+    "enabled": True,
+    "storage": {
+        "engine": "sqlite",
+        "FILE": "flask_profiler.sqlite"
+    },
+    "basicAuth": {
+        "enabled": False,
+        "username": "admin",
+        "password": "admin"
+    },
+    "ignore": ["/static/*", "/favicon.ico"],
+    "endpoint": "flask_profiler"
+}
+
+# Initialize extensions BEFORE routes
+flask_profiler.init_app(app)
 
 app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
     'pool_size': 5,
@@ -37,11 +57,13 @@ login_manager.init_app(app)
 
 
 @app.route('/', methods=['GET', 'POST'])
+@flask_profiler.profile()
 def home():
     return render_template('base.html')
 
 
 @app.route('/register', methods=['GET', 'POST'])
+@flask_profiler.profile()
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
@@ -64,6 +86,7 @@ def register():
 
 
 @app.route('/login', methods=['GET', 'POST'])
+@flask_profiler.profile()
 def login():
     form = LoginForm()
     if form.validate_on_submit():
@@ -83,6 +106,7 @@ def login():
 
 
 @app.route('/user_dashboard', methods=['GET'])
+@flask_profiler.profile()
 def user_dashboard():
     user_id = session.get('user_id')
     if not user_id:
@@ -100,6 +124,7 @@ def user_dashboard():
 
 
 @app.route('/user_dashboard_scores', methods=['GET'])
+@flask_profiler.profile()
 def user_dashboard_scores():
     user_id = session.get('user_id')
     if not user_id:
@@ -112,6 +137,7 @@ def user_dashboard_scores():
 
 
 @app.route('/view')
+@flask_profiler.profile()
 def view():
     quiz_id = request.args.get('quiz_id')
     quiz = Quiz.query.get(quiz_id)
@@ -131,12 +157,14 @@ def view():
 
 
 @app.route('/quiz/<int:quiz_id>', methods=['GET'])
+@flask_profiler.profile()
 def quiz(quiz_id):
     questions = Question.query.filter_by(quiz_id=quiz_id).all()
     return render_template('quiz.html', questions=questions, quiz_id=quiz_id)
 
 
 @app.route('/submit_quiz/<int:quiz_id>', methods=['POST'])
+@flask_profiler.profile()
 def submit_quiz(quiz_id):
     user_id = session.get('user_id')
     if not user_id:
@@ -164,6 +192,7 @@ def submit_quiz(quiz_id):
 
 
 @app.route('/quiz_info/<int:quiz_id>', methods=['GET'])
+@flask_profiler.profile()
 def quiz_info(quiz_id):
     quiz = Quiz.query.get(quiz_id)
     if not quiz:
@@ -183,6 +212,7 @@ def quiz_info(quiz_id):
 
 
 @app.route('/admin_dashboard', methods=['GET', 'POST'])
+@flask_profiler.profile()
 def admin_dashboard():
     if not session.get('user_id') or User.query.get(session['user_id']).role != 'admin':
         return redirect(url_for('login'))
@@ -194,6 +224,7 @@ def admin_dashboard():
 
 
 @app.route('/admin_dashboard_quiz', methods=['GET', 'POST'])
+@flask_profiler.profile()
 def admin_dashboard_quiz():
     if not session.get('user_id') or User.query.get(session['user_id']).role != 'admin':
         return redirect(url_for('login'))
@@ -208,6 +239,7 @@ def admin_dashboard_quiz():
 
 
 @app.route('/admin_dashboard_summary', methods=['GET', 'POST'])
+@flask_profiler.profile()
 def admin_dashboard_summary():
     if not session.get('user_id') or User.query.get(session['user_id']).role != 'admin':
         return redirect(url_for('login'))
@@ -226,6 +258,7 @@ def admin_dashboard_summary():
 
 
 @app.route('/api/quizzes', methods=['POST'])
+@flask_profiler.profile()
 def api_add_quiz():
     data = request.get_json()
     new_quiz = Quiz(
@@ -244,6 +277,7 @@ def api_add_quiz():
 
 
 @app.route('/api/questions', methods=['POST'])
+@flask_profiler.profile()
 def api_add_question():
     data = request.get_json()
     new_question = Question(
@@ -264,6 +298,7 @@ def api_add_question():
 
 
 @app.route('/add_quiz', methods=['GET', 'POST'])
+@flask_profiler.profile()
 def add_quiz():
     if request.method == 'POST':
         chapter_id = request.form['chapter_id']
@@ -291,6 +326,7 @@ def add_quiz():
 
 
 @app.route('/delete_question/<int:question_id>', methods=['POST'])
+@flask_profiler.profile()
 def delete_question(question_id):
     question_to_delete = Question.query.get(question_id)
     if question_to_delete:
@@ -301,6 +337,7 @@ def delete_question(question_id):
 
 
 @app.route('/add_question', methods=['GET', 'POST'])
+@flask_profiler.profile()
 def add_question():
     quiz_id = request.args.get('quiz_id')
     chapter_id = request.args.get('chapter_id')
@@ -329,6 +366,7 @@ def add_question():
 
 
 @app.route('/manage_users', methods=['GET', 'POST'])
+@flask_profiler.profile()
 def manage_users():
     users = User.query.all()
     if request.method == 'POST':
@@ -344,6 +382,7 @@ def manage_users():
 
 
 @app.route('/add_subject', methods=['GET', 'POST'])
+@flask_profiler.profile()
 def add_subject():
     if request.method == 'POST':
         new_subject = Subject(
@@ -359,6 +398,7 @@ def add_subject():
 
 
 @app.route('/add_chapter', methods=['GET', 'POST'])
+@flask_profiler.profile()
 def add_chapter():
     subject_id = request.args.get('subject_id')
     if not subject_id:
@@ -378,6 +418,7 @@ def add_chapter():
 
 
 @app.route('/delete_chapter/<int:chapter_id>', methods=['POST'])
+@flask_profiler.profile()
 def delete_chapter(chapter_id):
     chapter_to_delete = Chapter.query.get(chapter_id)
     if chapter_to_delete:
@@ -385,7 +426,6 @@ def delete_chapter(chapter_id):
         db.session.commit()
 
     return redirect(url_for('admin_dashboard'))
-
 
 def seed_default_data():
     """
@@ -488,7 +528,6 @@ def seed_default_data():
         db.session.rollback()
         s_logger.exception("Seeding failed; rolled back.")
         raise
-
 
 if __name__ == '__main__':
     with app.app_context():
