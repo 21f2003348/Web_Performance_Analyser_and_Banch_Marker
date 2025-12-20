@@ -1,4 +1,3 @@
-# tasks/json_task.py
 import json
 
 try:
