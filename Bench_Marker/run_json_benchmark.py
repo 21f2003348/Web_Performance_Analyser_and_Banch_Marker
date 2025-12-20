@@ -7,11 +7,15 @@ from tasks.json_task import (
     parse_json_orjson,
 )
 
-# Sample JSON payload (can scale size later)
+# Generate test data
 data = json.dumps({
     "name": "Benchmark Test",
-    "values": list(range(1000)),
-    "nested": {"a": 1, "b": 2, "c": [1, 2, 3]}
+    "values": list(range(5000)),
+    "nested": {
+        "a": 1,
+        "b": [i for i in range(100)],
+        "c": {"x": 10, "y": 20}
+    }
 })
 
 methods = [
