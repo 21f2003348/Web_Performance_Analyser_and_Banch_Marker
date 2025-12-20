@@ -1,0 +1,29 @@
+# Requirements for the Flask web application
+Flask>=2.3
+Flask-SQLAlchemy>=3.0
+Flask-WTF>=1.2
+Werkzeug>=2.3
+Jinja2>=3.1
+email-validator>=2.0
+
+# Database
+SQLAlchemy>=2.0
+
+# Authentication
+Flask-Login>=0.6
+
+# Performance profiling tools
+flask-profiler>=1.8.1
+psutil>=5.9
+
+# Bench_Marker specific requirements
+# Requirements for JSON parsing benchmarks
+ujson>=5.9
+orjson>=3.9
+
+# Utilities
+python-dateutil>=2.8
+
+# System monitoring
+psutil>=5.9
+
