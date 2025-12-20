@@ -1,7 +1,7 @@
 import json
 import os
 
-FILE_PATH = "Bench_Marker/tasks/Files/benchmark_file.json"
+FILE_PATH = "benchmark_file.json"
 
 def write_stdlib(data):
     with open(FILE_PATH, "w") as f:
